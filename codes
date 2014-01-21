@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <conio.h>
 #include <Windows.h>
@@ -60,24 +61,31 @@ void baslangic(){
 	}
 
 	if(secim9==1){
+		kayit=fopen("kayit.txt","r+");
+		if(kayit == NULL){
+			printf("\n\tSu anda kayitli bir hesabiniz bulunmamaktadir.");
+			Sleep(1500);
+			baslangic();
+		}
+		else{
 		printf("\n\tKullanici adinizi giriniz: ");
 		scanf("%s",&id);
 		printf("\n\tSifrenizi giriniz: ");
 		scanf("%s",&pw);
-		kayit=fopen("kayit.txt","r+");
-		while (fscanf(kayit, "%s  %s  ", &g.id, &g.pw)!= EOF){
-			if(strcmp(g.id,id)==0 ){
-				if(strcmp(g.pw,pw)==0){
-					printf("\n");
-					a=1;
+			while (fscanf(kayit, "%s  %s  ", &g.id, &g.pw)!= EOF){
+				if(strcmp(g.id,id)==0 ){
+					if(strcmp(g.pw,pw)==0){
+						printf("\n");
+						a=1;
+					}
 				}
 			}
-		}
-		fclose(kayit);
-		if(a==0){
-			printf("\n\tKullanici adinizi veya sifrenizi yanlis girdiniz.");
-			Sleep(1500);
-			baslangic();
+			fclose(kayit);
+			if(a==0){
+				printf("\n\tKullanici adinizi veya sifrenizi yanlis girdiniz.");
+				Sleep(1500);
+				baslangic();
+			}
 		}
 	}
 
@@ -127,7 +135,7 @@ void islemler(){
 		arama();
 		break;
 	case 9:
-		exit(1);
+		baslangic();
 	}
 
 }
@@ -140,7 +148,7 @@ void menu(){
 	printf("\t\t\t\333\333 3 = Guncelle            \333\333\n");
 	printf("\t\t\t\333\333 4 = Sil                 \333\333\n");
 	printf("\t\t\t\333\333 5 = Arama(ad,soyad,vb.) \333\333\n");
-	printf("\t\t\t\333\333 9 = Cikis               \333\333\n");
+	printf("\t\t\t\333\333 9 = Oturumu Kapat       \333\333\n");
 	printf("\t\t\t\333\333                         \333\333\n");
 	printf("\t\t\t\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\n");
 }
@@ -157,7 +165,7 @@ void menu1(){
 
 void kisiEkle(){
 	FILE *yeni;
-	int x=0;	
+	int x=0;        
 	char a;
 	do{
 		system("cls");
@@ -168,7 +176,7 @@ void kisiEkle(){
 		yeni = fopen("yeni.txt","a");
 		if (yeni==NULL)
 			printf("Dosya acilmadi.");
-		else{			
+		else{                        
 			printf("\nKisinin adini giriniz: ");
 			scanf("%s",&r.ad);
 			fprintf(yeni,"%s  ",r.ad);
@@ -225,13 +233,13 @@ void kisiEkle(){
 			printf("\n%s %s rehbere basariyla eklenmistir.",r.ad,r.soyad);
 			Sleep(2000);
 			system("cls");
-			secim=0;				//secimi 0 yaptım çünkü bu fonksiyonda işimiz bittiği zaman ana fonksiyona gittiğimizde secim 1'e eşit olduğu---
+			secim=0;                                //secimi 0 yaptım çünkü bu fonksiyonda işimiz bittiği zaman ana fonksiyona gittiğimizde secim 1'e eşit olduğu---
 			//---için "başka bir işlem yapmak istiyor musunuz?" diye sormadan program tekrar bu fonksiyona giriyor. 
 			for(;;){
 				printf("\nBaska bir kisi eklemek istiyor musunuz? (e/h) ");
-				scanf("%s",&a);			// a = evet hayır secimi
+				scanf("%s",&a);                        // a = evet hayır secimi
 
-				if( a=='h' || a=='e' || a=='H' || a=='E')	// Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
+				if( a=='h' || a=='e' || a=='H' || a=='E')        // Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
 					break;
 				else{
 					printf("Yanlis bir secim girdiniz.");
@@ -257,8 +265,8 @@ void goruntule(){
 	if(yeni==NULL){
 		while(1){
 			printf("\nRehberde hic kayit bulunamadi. Rehbere kisi eklemek istiyor musunuz? (e/h) ");
-			scanf("%s",&eh4);			// a = evet hayır secimi
-			if( eh4=='h' || eh4=='e' || eh4=='H' || eh4=='E')	// Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
+			scanf("%s",&eh4);                        // a = evet hayır secimi
+			if( eh4=='h' || eh4=='e' || eh4=='H' || eh4=='E')        // Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
 				break;
 			else{
 				printf("Yanlis bir secim girdiniz.");
@@ -305,26 +313,26 @@ void goruntule(){
 		}
 	}
 
-	for(i=1;i<=m;i++)		//Isim alfabe sirasina gore gosterim
+	for(i=1;i<=m;i++)                //Isim alfabe sirasina gore gosterim
 	{
-			printf("\n                      Adi              : %s",asil_rehber[i].ad);
-			printf("\n                      Soyadi           : %s",asil_rehber[i].soyad);
-			printf("\n                      Ev Telefonu      : %s",asil_rehber[i].evTel);
-			printf("\n          %d.          Cep Telefonu     : %s",i,asil_rehber[i].cepTel);
-			printf("\n                      Is Telefonu      : %s",asil_rehber[i].isTel);
-			printf("\n                      e-posta Adresi   : %s",asil_rehber[i].e_posta);
-			printf("\n                      Dogum Tarihi     : %s",asil_rehber[i].dogumT);
-			printf("\n\n\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333");
-			printf("\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333");
-			printf("\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333");
-			printf("\333\333\333\333\333\333\333\333\333\333\333\n");
+		printf("\n                      Adi              : %s",asil_rehber[i].ad);
+		printf("\n                      Soyadi           : %s",asil_rehber[i].soyad);
+		printf("\n                      Ev Telefonu      : %s",asil_rehber[i].evTel);
+		printf("\n          %d.          Cep Telefonu     : %s",i,asil_rehber[i].cepTel);
+		printf("\n                      Is Telefonu      : %s",asil_rehber[i].isTel);
+		printf("\n                      e-posta Adresi   : %s",asil_rehber[i].e_posta);
+		printf("\n                      Dogum Tarihi     : %s",asil_rehber[i].dogumT);
+		printf("\n\n\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333");
+		printf("\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333");
+		printf("\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333\333");
+		printf("\333\333\333\333\333\333\333\333\333\333\333\n");
 	}
 	Sleep(3000);
 	for(;;){
 		printf("Ana menuye donmek istiyor musunuz? (e/h) ");
-		scanf("%s",&eh2);			// a = evet hayır secimi
+		scanf("%s",&eh2);                        // a = evet hayır secimi
 
-		if( eh2=='h' || eh2=='e' || eh2=='H' || eh2=='E')	// Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
+		if( eh2=='h' || eh2=='e' || eh2=='H' || eh2=='E')        // Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
 			break;
 		else{
 			printf("Yanlis bir secim girdiniz.");
@@ -357,11 +365,11 @@ void guncelle(){
 	printf("\n\t\t\t    \333\333                        \333\333\n");
 	printf("\t\t\t    \333\333    GUNCELLEME BOLUMU   \333\333\n");
 	printf("\t\t\t    \333\333\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\334\333\333\n\n");
-	yeni = fopen("yeni.txt", "r+");	
+	yeni = fopen("yeni.txt", "r+");        
 	while (fscanf(yeni, "%s  %s  %s  %s  %s  %s  %s  ", &r.ad, &r.soyad, &r.evTel, &r.cepTel, &r.isTel, &r.e_posta, &r.dogumT)!= EOF){
 		if (strcmp(r.ad, guncellenecekIsim)==0)
-		{	
-			z=1;		// girilen isimin olup olmadığını yardımcı olan değişken
+		{        
+			z=1;                // girilen isimin olup olmadığını yardımcı olan değişken
 			printf("\n%s hakkinda yeni bilgileri giriniz.\n",guncellenecekIsim);
 			printf("-------------------------------------\n");
 			printf("\nAd: ");
@@ -402,7 +410,7 @@ void guncelle(){
 				}
 			}
 			printf("\nE-posta: ");
-			scanf("%s",&yedek1[k].e_posta);			
+			scanf("%s",&yedek1[k].e_posta);                        
 			printf("\nDogum tarihi: ");
 			scanf("%s",&yedek1[k].dogumT);
 			printf("\n\n\t\t\t\t\tKisi guncellenmistir.\n\n");
@@ -426,7 +434,7 @@ void guncelle(){
 		system("cls");
 	}
 	yeni=fopen("yeni.txt","w");
-	for(int j=0 ; j<k ; j++){			//dosyayı sıfırdan açıp tekrar yazdırmak.
+	for(int j=0 ; j<k ; j++){                        //dosyayı sıfırdan açıp tekrar yazdırmak.
 		fprintf(yeni, "%s  %s  %s  %s  %s  %s  %s  \n",yedek1[j].ad, yedek1[j].soyad, yedek1[j].cepTel, yedek1[j].evTel, yedek1[j].isTel,yedek1[j].e_posta , yedek1[j].dogumT);
 	}
 	fclose(yeni);
@@ -448,13 +456,13 @@ void sil(){
 	struct rehber yedek[BUFSIZ];
 	int i=0,y=0;
 	while(fscanf(yeni, "%s  %s  %s  %s  %s  %s  %s  ", &r.ad, &r.soyad, &r.cepTel, &r.evTel, &r.isTel, &r.e_posta, &r.dogumT)!=EOF){
-		if(strcmp(r.ad,silinecek)==0){	
+		if(strcmp(r.ad,silinecek)==0){        
 			y=1;
 			for(;;){
-				printf("\n%s adli kisiyi silmek istediginizden emin misiniz? (e/h)",silinecek);		
-				scanf("%s",&eh3);			// eh3 = evet hayır secimi
+				printf("\n%s adli kisiyi silmek istediginizden emin misiniz? (e/h)",silinecek);                
+				scanf("%s",&eh3);                        // eh3 = evet hayır secimi
 
-				if( eh3=='h' || eh3=='e' || eh3=='H' || eh3=='E')	// Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
+				if( eh3=='h' || eh3=='e' || eh3=='H' || eh3=='E')        // Eğer cevap 'e' veya 'h' ise içerdeki döngüden çıkar. değil ise 'e' veya 'h' girene kadar kullanıcıya sorar.
 					break;
 				else{
 					printf("Yanlis bir secim girdiniz.");
@@ -477,7 +485,7 @@ void sil(){
 				islemler();
 			}
 		}
-		else {		
+		else {                
 			strcpy(yedek[i].ad,r.ad);
 			strcpy(yedek[i].soyad,r.soyad);
 			strcpy(yedek[i].evTel,r.evTel);
@@ -489,7 +497,7 @@ void sil(){
 		i++;
 	}
 	fclose(yeni);
-	if(y==0){		
+	if(y==0){                
 		printf("\nRehberde %s isimli biri bulunamadi.",silinecek);
 		Sleep(1500);
 		system("cls");
@@ -510,7 +518,7 @@ void sil(){
 	islemler();
 }
 
-void arama(){	
+void arama(){        
 
 	FILE *yeni;
 	int p=0,t=0,s=0,v=0;
@@ -558,7 +566,7 @@ void arama(){
 			printf("\n\n\tAranacak soyadi giriniz: ");
 			scanf("%s",&aranacakSoyad);
 			printf("\n");
-			while(fscanf(yeni,"%s  %s  %s  %s  %s  %s  %s",&r.ad,&r.soyad,&r.evTel,&r.cepTel,&r.isTel,&r.e_posta,&r.dogumT)!=EOF){				
+			while(fscanf(yeni,"%s  %s  %s  %s  %s  %s  %s",&r.ad,&r.soyad,&r.evTel,&r.cepTel,&r.isTel,&r.e_posta,&r.dogumT)!=EOF){                                
 				if(strcmp(aranacakSoyad,r.soyad)==0){
 					t=1;
 					printf("\tKisinin adi:               %s\n",r.ad);
@@ -573,7 +581,7 @@ void arama(){
 
 			}
 		}
-		if(ara==3){	
+		if(ara==3){        
 			printf("\n\n\tAranacak e-posta adresini giriniz: ");
 			scanf("%s",&aranacakE_posta);
 			printf("\n");
@@ -591,7 +599,7 @@ void arama(){
 				}
 			}
 		}
-		if(ara==4){	
+		if(ara==4){        
 			printf("\n\n\tAranacak dogum tarihini giriniz: ");
 			scanf("%s",&aranacakDogumT);
 			printf("\n");
@@ -641,7 +649,7 @@ void arama(){
 			exit(1);
 		if(k=='e'|| k=='E')
 			islemler();
-	}			
+	}                        
 }
 
 int numaraKontrol(char a[30]){
